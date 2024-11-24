@@ -32,7 +32,7 @@ persona.db.init_app(app)
 @app.route("/")
 def index():
     try:
-        # Imprimir los distintos endopoints disponibles
+        # Imprimir los distintos endpoints disponibles
         # Renderizar el temaplate HTML index.html
         print("Renderizar index.html")
         return render_template('index.html')
@@ -67,15 +67,6 @@ def personas():
 
         # Alumno: Pasarle al metodo report los valores de limit y offset
         data = persona.report(limit=limit, offset=offset)
-        
-        #result = '''<h3>Alumno: Implementar la llamada
-        #            al HTML tabla.html
-        #            con render_template, recuerde pasar
-        #            data como parámetro</h3>'''
-        # Sacar esta linea cuando haya implementado el return
-        # con render template
-        #return result
-
         return render_template('tabla.html', data=data)
     except:
         return jsonify({'trace': traceback.format_exc()})
@@ -95,18 +86,8 @@ def registro():
             name = ""
             age = 0
 
-            #return "Alumno --> Realice la implementacion y borre este return"
-
-            # Alumno:
-            # Obtener del HTTP POST JSON el nombre y la edad
-            # name = ...
-            # age = ...
-
             name = str(request.form.get('name')).lower()
             age = str(request.form.get('age'))
-
-            # Alumno: descomentar la linea persona.insert una vez implementado
-            # lo anterior:
 
             persona.insert(name, int(age))
             
@@ -121,28 +102,9 @@ def registro():
 @app.route("/comparativa")
 def comparativa():
     try:
-        # Alumno:
-        # Implementar una función en persona.py llamada "dashboard"
-        # Lo que desea es realizar un gráfico de linea con las edades
-        # de todas las personas en la base de datos
-
-        # Para eso, su función "dashboard" debe devolver dos valores:
-        # - El primer valor que debe devolver es "x", que debe ser
-        # los Ids de todas las personas en su base de datos
-        # - El segundo valor que debe devolver es "y", que deben ser
-        # todas las edades respectivas a los Ids que se encuentran en "x"
-
-        # Descomentar luego de haber implementado su función en persona.py:
-
-        #x = ['jesus', 'carlos', 'marcos']
-        #y = [43,54,18]
-
         x, y = persona.dashboard()
         image_html = utils.graficar(x, y)
         return Response(image_html.getvalue(), mimetype='image/png')
-
-        #return "Alumno --> Realice la implementacion"
-
     except:
         return jsonify({'trace': traceback.format_exc()})
 
@@ -157,7 +119,7 @@ def before_first_request_func():
 
 
 if __name__ == '__main__':
-    print('Inove@Server start!')
+    print('Servidor iniciado')
 
     # Lanzar server
     app.run(host="127.0.0.1", port=5000)
